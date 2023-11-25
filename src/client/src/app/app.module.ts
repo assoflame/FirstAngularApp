@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-// import { AppRoutingModule } from './app-routing.module';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -24,6 +23,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // import { HomeModalComponent } from './components/home-modal/home-modal.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { SignInFormComponent } from './components/sign-in-form/sign-in-form.component';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './components/app/app.component';
 // import { RegisterComponent } from './components/register/register.component';
 // import { SimpleDataComponent } from './simple-data/simple-data.component';
 // import { JwtHelperService, JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
@@ -46,14 +47,14 @@ import { SignInFormComponent } from './components/sign-in-form/sign-in-form.comp
 
 @NgModule({
   declarations: [
-  
-    SignInFormComponent
+    SignInFormComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    // AppRoutingModule,
+    AppRoutingModule,
     MatCardModule,
     MatInputModule,
     MatIconModule,
@@ -69,6 +70,6 @@ import { SignInFormComponent } from './components/sign-in-form/sign-in-form.comp
     FormsModule,
   ],
   providers: [] ,
-  bootstrap: [],
+  bootstrap: [AppComponent],
 })
 export class AppModule {}
