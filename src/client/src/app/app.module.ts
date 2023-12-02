@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { MatCardModule } from '@angular/material/card';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatListModule } from '@angular/material/list';
-import { MatIconModule } from '@angular/material/icon';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
+// import { MatCardModule } from '@angular/material/card';
+// import { MatInputModule } from '@angular/material/input';
+// import { MatButtonModule } from '@angular/material/button';
+// import { MatSidenavModule } from '@angular/material/sidenav';
+// import { MatListModule } from '@angular/material/list';
+// import { MatIconModule } from '@angular/material/icon';
+// import { MatDialogModule } from '@angular/material/dialog';
+// import { MatMenuModule } from '@angular/material/menu';
+// import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -25,6 +25,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { SignInFormComponent } from './components/sign-in-form/sign-in-form.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './components/app/app.component';
+import { SignUpFormComponent } from './components/sign-up-form/sign-up-form.component';
+import { DemoMaterialModule } from './demo-material/demo-material.module';
 // import { RegisterComponent } from './components/register/register.component';
 // import { SimpleDataComponent } from './simple-data/simple-data.component';
 // import { JwtHelperService, JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
@@ -48,6 +50,7 @@ import { AppComponent } from './components/app/app.component';
 @NgModule({
   declarations: [
     SignInFormComponent,
+    SignUpFormComponent,
     AppComponent
   ],
   imports: [
@@ -55,17 +58,17 @@ import { AppComponent } from './components/app/app.component';
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
-    MatCardModule,
-    MatInputModule,
-    MatIconModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatListModule,
-    MatDialogModule,
-    MatMenuModule,
-    MatToolbarModule,
-    MatButtonToggleModule,
-    // DemoMaterialModule,
+    // MatCardModule,
+    // MatInputModule,
+    // MatIconModule,
+    // MatButtonModule,
+    // MatSidenavModule,
+    // MatListModule,
+    // MatDialogModule,
+    // MatMenuModule,
+    // MatToolbarModule,
+    // MatButtonToggleModule,
+    DemoMaterialModule,
     ReactiveFormsModule,
     FormsModule,
   ],

@@ -7,5 +7,6 @@ namespace webapp.Services.Interfaces
         Task<bool> ValidateUserAsync(SignInDto userForSignInDto);
         Task<TokenDto> CreateTokenAsync(bool populateExp);
         Task<TokenDto> RefreshTokenAsync(TokenDto tokenDto);
+        Task SignUpAsync(SignUpDto userForSignUpDto);
     }
 }

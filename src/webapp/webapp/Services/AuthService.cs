@@ -22,6 +22,18 @@ namespace webapp.Services
             _unitOfWork = unitOfWork;
             _configuration = configuration;
         }
+        public async Task SignUpAsync(SignUpDto userSignUpDto)
+        {
+            var user = new User { Username = userSignUpDto.Username };
+
+            user.PasswordHash = ComputeMD5HashString(String.Concat(userSignUpDto.Password, user.Username));
+
+            _unitOfWork.Users.Create(user);
+
+            user.Role = "user";
+
+            await _unitOfWork.SaveAsync();
+        }
 
         public async Task<bool> ValidateUserAsync(SignInDto signInDto)
         {
@@ -32,8 +44,6 @@ namespace webapp.Services
             {
                 return false;
             }
-
-            var tmpHash = ComputeMD5HashString(String.Concat(signInDto.Password, _user.Username));
 
             var passwordHash = ComputeMD5HashString(
                 String.Concat(signInDto.Password, _user.Username));

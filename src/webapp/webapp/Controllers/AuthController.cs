@@ -15,6 +15,17 @@ namespace webapp.Controllers
             _services = services;
         }
 
+        [HttpPost("signup")]
+        public async Task<IActionResult> SignUp([FromBody] SignUpDto userSignUpDto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            await _services.AuthService.SignUpAsync(userSignUpDto);
+
+            return Ok();
+        }
+
         [HttpPost("signin")]
         public async Task<IActionResult> SignIn([FromBody] SignInDto userSignInDto)
         {

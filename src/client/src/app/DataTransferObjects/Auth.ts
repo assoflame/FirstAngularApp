@@ -1,10 +1,10 @@
 export interface SignInDto {
-    login: string;
+    username: string;
     password: string;
 }
 
 export interface SignUpDto {
-    login: string;
+    username: string;
     password: string;
 }
 

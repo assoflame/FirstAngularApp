@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-import {first} from 'rxjs';
+import { first } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -11,13 +11,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class SignInFormComponent implements OnInit {
 
-  signInForm! : FormGroup;
+  signInForm!: FormGroup;
 
   constructor(
     private fromBuilder: FormBuilder,
     private authService: AuthenticationService,
     private route: ActivatedRoute,
-    private router: Router) {}
+    private router: Router) { }
 
   ngOnInit() {
     this.signInForm = this.fromBuilder.group({
@@ -28,24 +28,24 @@ export class SignInFormComponent implements OnInit {
 
 
   onSubmit() {
-    if(this.signInForm.invalid)
+    if (this.signInForm.invalid)
       return;
 
-      const signInDto = {
-        login: this.signInForm.controls['username'].value,
-        password : this.signInForm.controls['password'].value
-      };
+    const signInDto = {
+      username: this.signInForm.controls['username'].value,
+      password: this.signInForm.controls['password'].value
+    };
 
-      this.authService.signIn(signInDto)
-        .pipe(first())
-        .subscribe({
-          next: () => {
-            const returnUrl = '/';
-            this.router.navigateByUrl(returnUrl);
-          },
-          error: error => {
-            console.log(error);
-          }
-        });
+    this.authService.signIn(signInDto)
+      .pipe(first())
+      .subscribe({
+        next: () => {
+          const returnUrl = '/qwe';
+          this.router.navigateByUrl(returnUrl);
+        },
+        error: error => {
+          console.log(error);
+        }
+      });
   }
 }
