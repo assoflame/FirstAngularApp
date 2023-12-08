@@ -15,7 +15,7 @@ namespace webapp.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly IConfiguration _configuration;
 
-        private User _user;
+        private User? _user;
 
         public AuthService(IUnitOfWork unitOfWork, IConfiguration configuration)
         {
@@ -38,7 +38,7 @@ namespace webapp.Services
         public async Task<bool> ValidateUserAsync(SignInDto signInDto)
         {
             _user = await _unitOfWork.Users
-                .GetUserByUsernameAsync(signInDto.Username, trackChanges: false);
+                .GetUserByUsernameAsync(signInDto.Username);
 
             if (_user == null)
             {
@@ -157,7 +157,7 @@ namespace webapp.Services
             var username = principal?.FindFirst("Username")?.Value;
 
             var user = await _unitOfWork.Users
-                .GetUserByUsernameAsync(username, trackChanges: true);
+                .GetUserByUsernameAsync(username);
 
             if (user is null || user.RefreshToken != tokenDto.RefreshToken ||
                    user.RefreshTokenExpiryTime < DateTime.Now)

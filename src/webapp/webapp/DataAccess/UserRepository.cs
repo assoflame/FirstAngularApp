@@ -8,13 +8,14 @@ namespace webapp.DataAccess
     {
         public UserRepository(ApplicationContext context) : base(context) { }
 
-        public async Task<User?> GetUserByIdAsync(int id, bool trackChanges)
-            => await FindByCondition(user => user.Id == id, trackChanges)
-                    .FirstOrDefaultAsync();
+        public async Task<User?> GetUserByIdAsync(int id)
+            => await DbContext.Users.FirstOrDefaultAsync(user => user.Id == id);
 
+        public async Task<User?> GetUserByUsernameAsync(string username)
+            => await DbContext.Users
+            .FirstOrDefaultAsync(user => user.Username.Equals(username));
 
-        public async Task<User?> GetUserByUsernameAsync(string email, bool trackChanges)
-            => await FindByCondition(user => user.Username == email, trackChanges)
-                .FirstOrDefaultAsync();
+        public async Task<IEnumerable<User>> GetUsersAsync()
+            => await DbContext.Users.ToListAsync();
     }
 }
