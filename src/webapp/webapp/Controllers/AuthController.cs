@@ -32,7 +32,7 @@ namespace webapp.Controllers
             if (!await _services.AuthService.ValidateUserAsync(userSignInDto))
                 return Unauthorized();
 
-            return Ok(new { Token = await _services.AuthService.CreateTokenAsync(populateExp: true) });
+            return Ok(await _services.AuthService.CreateTokenAsync(populateExp: true));
         }
 
         [HttpPost("refresh")]
