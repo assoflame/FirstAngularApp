@@ -27,6 +27,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './components/app/app.component';
 import { SignUpFormComponent } from './components/sign-up-form/sign-up-form.component';
 import { DemoMaterialModule } from './demo-material/demo-material.module';
+import { UsersComponent } from './components/users/users.component';
 // import { RegisterComponent } from './components/register/register.component';
 // import { SimpleDataComponent } from './simple-data/simple-data.component';
 // import { JwtHelperService, JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
@@ -51,7 +52,8 @@ import { DemoMaterialModule } from './demo-material/demo-material.module';
   declarations: [
     SignInFormComponent,
     SignUpFormComponent,
-    AppComponent
+    UsersComponent,
+    AppComponent,
   ],
   imports: [
     BrowserModule,

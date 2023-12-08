@@ -9,11 +9,19 @@ export interface SignUpDto {
 }
 
 export interface User {
-    username: string;
-    role: Role;
+    id: number,
+    username: string,
+    role: Role,
+    accessToken: string,
+    refreshToken: string
 }
 
 export enum Role {
-    Admin,
-    User
+    Admin = 'admin',
+    User = 'user'
+}
+
+export interface TokenDto {
+    accessToken: string,
+    refreshToken: string
 }
