@@ -7,6 +7,7 @@ namespace webapp.Services
     {
         private readonly Lazy<IAuthService> _authService;
         private readonly Lazy<IUsersService> _usersService;
+        private readonly Lazy<IMeetService> _meetService;
 
         public ServiceManager(IUnitOfWork unitOfWork, IConfiguration configuration)
         {
@@ -15,9 +16,13 @@ namespace webapp.Services
 
             _usersService = new Lazy<IUsersService>(
                 () => new UsersService(unitOfWork));
+
+            _meetService = new Lazy<IMeetService>(
+                () => new MeetService(unitOfWork));
         }
 
         public IAuthService AuthService => _authService.Value;
         public IUsersService UsersService => _usersService.Value;
+        public IMeetService MeetsService => _meetService.Value;
     }
 }

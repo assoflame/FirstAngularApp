@@ -12,8 +12,10 @@ export interface User {
     id: number,
     username: string,
     role: Role,
-    accessToken: string,
-    refreshToken: string
+    tokenDto: TokenDto,
+    firstname? : string,
+    lastname? : string,
+    age? : number
 }
 
 export enum Role {

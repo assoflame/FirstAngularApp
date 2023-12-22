@@ -4,6 +4,8 @@ import { SignInFormComponent } from "./components/sign-in-form/sign-in-form.comp
 import { SignUpFormComponent } from "./components/sign-up-form/sign-up-form.component";
 import { adminGuard } from './guards/admin.guard';
 import { UsersComponent } from './components/users/users.component';
+import { UserEditingComponent } from './components/user-editing/user-editing.component';
+import { StatisticsComponent } from './components/statistics/statistics.component';
 
 
 const routes: Routes = [
@@ -16,13 +18,22 @@ const routes: Routes = [
         component: SignUpFormComponent
     },
     {
-        path: 'admin',
+        path: 'users',
         component: UsersComponent,
         canActivate: [adminGuard]
     },
     {
+        path: 'user-editing/:userId',
+        component: UserEditingComponent,
+        canActivate: [adminGuard]
+    },
+    {
+        path: 'statistics',
+        component: StatisticsComponent
+    },
+    {
         path: '**',
-        redirectTo: '/'
+        redirectTo: 'signin'
     }
 ];
 

@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SignInDto, SignUpDto, TokenDto, User } from '../dataTransferObjects/Auth';
-import { BehaviorSubject, Observable, map, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, interval, map, switchMap, timer } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -15,6 +15,8 @@ export class AuthenticationService {
   constructor(private httpClient: HttpClient, private router: Router) {
     this.userSubject = new BehaviorSubject<User | null>(JSON.parse(localStorage.getItem('user')!) || null);
     this.user = this.userSubject.asObservable();
+    timer(100).subscribe(() => this.refreshToken());
+    interval(13 * 60 * 1000).subscribe(() => this.refreshToken());
   }
 
   public get userValue() {
@@ -27,10 +29,7 @@ export class AuthenticationService {
     return this.httpClient.post<any>('http://localhost:5228/api/auth/signin',
       JSON.stringify(signInDto), { headers })
       .pipe(map(tokenDto => {
-        const user = this.getUserInfo(tokenDto);
-        localStorage.setItem('user', JSON.stringify(user));
-        console.log(localStorage['user']);
-        this.userSubject.next(user);
+        this.refreshUserInfo(tokenDto);
       }))
   };
 
@@ -46,6 +45,20 @@ export class AuthenticationService {
       JSON.stringify(signUpDto), { headers })
       .pipe(switchMap(() => this.signIn(signInDto)));
   }
+  
+  public refreshToken() {
+    const user = this.userValue;
+
+    if(user != null) {
+      let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+      this.httpClient.post<any>('http://localhost:5228/api/auth/refresh',
+        JSON.stringify(user.tokenDto), {headers})
+        .pipe(map(tokenDto => {
+          this.refreshUserInfo(tokenDto);
+        })).subscribe();
+    }
+  }
 
   public logout() {
     localStorage.removeItem('user');
@@ -53,17 +66,15 @@ export class AuthenticationService {
     this.router.navigateByUrl('/signin');
   }
 
-  private getUserInfo(tokenDto: TokenDto) : User {
+  private refreshUserInfo(tokenDto: TokenDto) : void {
     const payload = JSON.parse(atob(tokenDto.accessToken.split('.')[1]));
-    console.log(payload);
     const user : User = {
-      id : payload.Id,
-      username : payload.Username,
-      role: payload.Role,
-      accessToken: tokenDto.accessToken,
-      refreshToken: tokenDto.refreshToken
-    }
-
-    return user;
+      id : payload.id,
+      username : payload.username,
+      role: payload.role,
+      tokenDto
+    };
+    localStorage.setItem('user', JSON.stringify(user));
+    this.userSubject.next(user);
   }
 }

@@ -40,7 +40,7 @@ export class SignInFormComponent implements OnInit {
       .pipe(first())
       .subscribe({
         next: () => {
-          const returnUrl = '/qwe';
+          const returnUrl = '/users';
           this.router.navigateByUrl(returnUrl);
         },
         error: error => {

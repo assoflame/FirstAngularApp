@@ -82,7 +82,7 @@ namespace webapp.Services
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = new SymmetricSecurityKey(
                     Encoding.UTF8.GetBytes(jwtSettings["secretKey"])),
-                ValidateLifetime = true,
+                ValidateLifetime = false,
                 ValidIssuer = jwtSettings["validIssuer"],
                 ValidAudience = jwtSettings["validAudience"]
             };
@@ -126,9 +126,9 @@ namespace webapp.Services
         {
             var claims = new List<Claim>
             {
-                new Claim("Username", _user.Username),
-                new Claim("Role", _user.Role),
-                new Claim("Id", _user.Id.ToString())
+                new Claim("username", _user.Username),
+                new Claim("role", _user.Role),
+                new Claim("id", _user.Id.ToString())
             };
 
             return claims;

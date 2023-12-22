@@ -28,6 +28,12 @@ import { AppComponent } from './components/app/app.component';
 import { SignUpFormComponent } from './components/sign-up-form/sign-up-form.component';
 import { DemoMaterialModule } from './demo-material/demo-material.module';
 import { UsersComponent } from './components/users/users.component';
+import { MatTableModule } from '@angular/material/table';
+import { CommonModule } from '@angular/common';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { JwtInterceptor } from './services/jwt-interceptor.service';
+import { UserEditingComponent } from './components/user-editing/user-editing.component';
+import { StatisticsComponent } from './components/statistics/statistics.component';
 // import { RegisterComponent } from './components/register/register.component';
 // import { SimpleDataComponent } from './simple-data/simple-data.component';
 // import { JwtHelperService, JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
@@ -54,6 +60,9 @@ import { UsersComponent } from './components/users/users.component';
     SignUpFormComponent,
     UsersComponent,
     AppComponent,
+    NavbarComponent,
+    UserEditingComponent,
+    StatisticsComponent,
   ],
   imports: [
     BrowserModule,
@@ -73,8 +82,10 @@ import { UsersComponent } from './components/users/users.component';
     DemoMaterialModule,
     ReactiveFormsModule,
     FormsModule,
+    MatTableModule,
+    CommonModule
   ],
-  providers: [] ,
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true } ] ,
   bootstrap: [AppComponent],
 })
 export class AppModule {}

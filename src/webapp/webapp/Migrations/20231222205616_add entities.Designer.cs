@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using webapp.DataAccess;
@@ -11,9 +12,10 @@ using webapp.DataAccess;
 namespace webapp.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20231222205616_add entities")]
+    partial class addentities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,29 +23,6 @@ namespace webapp.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
-
-            modelBuilder.Entity("webapp.Models.CustomerMeet", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("MeetId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CustomerId");
-
-                    b.HasIndex("MeetId");
-
-                    b.ToTable("CustomerMeet");
-                });
 
             modelBuilder.Entity("webapp.Models.Meet", b =>
                 {
@@ -116,6 +95,9 @@ namespace webapp.Migrations
                     b.Property<string>("Lastname")
                         .HasColumnType("text");
 
+                    b.Property<int?>("MeetId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("text");
@@ -136,26 +118,9 @@ namespace webapp.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("MeetId");
+
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("webapp.Models.CustomerMeet", b =>
-                {
-                    b.HasOne("webapp.Models.User", "Customer")
-                        .WithMany("CustomerMeets")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("webapp.Models.Meet", "Meet")
-                        .WithMany("CustomersMeets")
-                        .HasForeignKey("MeetId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Customer");
-
-                    b.Navigation("Meet");
                 });
 
             modelBuilder.Entity("webapp.Models.Meet", b =>
@@ -169,19 +134,21 @@ namespace webapp.Migrations
                     b.Navigation("Place");
                 });
 
+            modelBuilder.Entity("webapp.Models.User", b =>
+                {
+                    b.HasOne("webapp.Models.Meet", null)
+                        .WithMany("Customers")
+                        .HasForeignKey("MeetId");
+                });
+
             modelBuilder.Entity("webapp.Models.Meet", b =>
                 {
-                    b.Navigation("CustomersMeets");
+                    b.Navigation("Customers");
                 });
 
             modelBuilder.Entity("webapp.Models.Place", b =>
                 {
                     b.Navigation("Meets");
-                });
-
-            modelBuilder.Entity("webapp.Models.User", b =>
-                {
-                    b.Navigation("CustomerMeets");
                 });
 #pragma warning restore 612, 618
         }

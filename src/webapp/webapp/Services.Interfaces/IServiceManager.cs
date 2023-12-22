@@ -4,5 +4,6 @@
     {
         IAuthService AuthService { get; }
         IUsersService UsersService { get; }
+        IMeetService MeetsService { get; }
     }
 }
